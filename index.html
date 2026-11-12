@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pixel Bat Animation | Edição Especial</title>
+  <link rel="stylesheet" href="https://public.codepenassets.com/css/normalize-5.0.0.min.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      overflow: hidden;
+      background: linear-gradient(to bottom, #04030c 0%, #0e0929 50%, #1d1247 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    /* --- CENÁRIO: ESTRELAS EM DUAS CAMADAS --- */
+    .stars, .stars-2 {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 4px;
+      background: transparent;
+      z-index: 1;
+    }
+
+    .stars {
+      box-shadow: 
+        10vw 12vh #fff, 22vw 28vh #ffd700, 35vw 8vh #fff, 48vw 22vh #a0c4ff,
+        62vw 14vh #fff, 75vw 32vh #fff, 88vw 10vh #ffd700, 94vw 26vh #fff,
+        15vw 42vh #a0c4ff, 30vw 48vh #fff, 55vw 38vh #fff, 82vw 45vh #a0c4ff;
+      animation: twinkle 2.5s ease-in-out infinite alternate;
+    }
+
+    .stars-2 {
+      width: 3px;
+      height: 3px;
+      box-shadow: 
+        5vw 20vh #fff, 42vw 15vh #ffd700, 70vw 18vh #fff, 90vw 38vh #a0c4ff,
+        18vw 8vh #fff, 52vw 30vh #fff, 66vw 42vh #ffd700, 8vw 35vh #fff;
+      animation: twinkle 3.8s ease-in-out infinite alternate-reverse;
+    }
+
+    @keyframes twinkle {
+      0% { opacity: 0.2; }
+      100% { opacity: 1; }
+    }
+
+    /* --- CENÁRIO: ESTRELA CADENTE --- */
+    .shooting-star {
+      position: absolute;
+      top: 10%;
+      left: 80%;
+      width: 4px;
+      height: 4px;
+      background: #fff;
+      box-shadow: 0 0 10px #fff, 10px -10px 0 rgba(255,255,255,0.5), 20px -20px 0 rgba(255,255,255,0.2);
+      z-index: 1;
+      opacity: 0;
+      animation: shoot 9s linear infinite;
+    }
+
+    @keyframes shoot {
+      0% { transform: translate(0, 0); opacity: 0; }
+      5% { opacity: 1; }
+      15% { transform: translate(-450px, 350px); opacity: 0; }
+      100% { transform: translate(-450px, 350px); opacity: 0; }
+    }
+
+    /* --- CENÁRIO: LUA EM PIXEL ART --- */
+    .moon {
+      position: absolute;
+      top: 11%;
+      right: 15%;
+      width: 96px;
+      height: 96px;
+      background-color: #fefcd7;
+      border-radius: 50%;
+      box-shadow: 
+        0 0 30px rgba(254, 252, 215, 0.7),
+        0 0 70px rgba(254, 252, 215, 0.3),
+        inset -16px -12px 0px #e8e2a2;
+      z-index: 2;
+    }
+
+    /* --- CENÁRIO: NUVENS PASSANDO --- */
+    .cloud {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      background: transparent;
+      opacity: 0.22;
+      z-index: 3;
+      box-shadow:
+        12px 0 #8c7ae6, 24px 0 #8c7ae6, 36px 0 #8c7ae6,
+        0 12px #8c7ae6, 12px 12px #8c7ae6, 24px 12px #8c7ae6, 36px 12px #8c7ae6, 48px 12px #8c7ae6, 60px 12px #8c7ae6,
+        -12px 24px #8c7ae6, 0 24px #8c7ae6, 12px 24px #8c7ae6, 24px 24px #8c7ae6, 36px 24px #8c7ae6, 48px 24px #8c7ae6, 60px 24px #8c7ae6, 72px 24px #8c7ae6;
+    }
+
+    .cloud-1 { top: 16%; animation: moveCloud 45s linear infinite; }
+    .cloud-2 { top: 32%; transform: scale(0.75); animation: moveCloud 65s linear infinite; animation-delay: -22s; }
+
+    @keyframes moveCloud {
+      from { left: -120px; }
+      to { left: 105vw; }
+    }
+
+    /* --- CENÁRIO: MONTANHAS, CASTELO E NÉVOA --- */
+    .landscape {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 200px;
+      z-index: 4;
+      pointer-events: none;
+    }
+
+    .mountain-back {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 180px;
+      background-color: #100929;
+      clip-path: polygon(0% 100%, 0% 45%, 18% 15%, 36% 55%, 58% 10%, 78% 50%, 92% 20%, 100% 40%, 100% 100%);
+    }
+
+    /* Silhueta de torre/castelo distante */
+    .castle {
+      position: absolute;
+      bottom: 95px;
+      left: 16%;
+      width: 36px;
+      height: 55px;
+      background-color: #100929;
+      clip-path: polygon(0% 100%, 0% 25%, 20% 25%, 20% 0%, 40% 0%, 40% 25%, 60% 25%, 60% 0%, 80% 0%, 80% 25%, 100% 25%, 100% 100%);
+    }
+
+    .mountain-front {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 115px;
+      background-color: #060310;
+      clip-path: polygon(0% 100%, 0% 35%, 12% 60%, 28% 20%, 48% 65%, 68% 25%, 85% 55%, 100% 25%, 100% 100%);
+    }
+
+    .mist {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 70px;
+      background: linear-gradient(to top, rgba(140, 122, 230, 0.15), transparent);
+      z-index: 5;
+    }
+
+    /* --- MORCEGO EM PIXEL ART --- */
+    .bat-container {
+      position: relative;
+      z-index: 10;
+      animation: float 2.4s ease-in-out infinite;
+    }
+
+    .bat-wrapper {
+      position: relative;
+      transform: scale(1.7);
+    }
+
+    .bat {
+      width: 10px;
+      height: 10px;
+      background: transparent;
+      transition: filter 1.5s ease-in-out;
+      animation: flap 0.42s steps(1) infinite;
+    }
+
+    /* --- OLHOS COM TROCA DE COR CONSTANTE --- */
+    .bat-eyes {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 10px;
+      height: 10px;
+      background: transparent;
+      box-shadow: -10px 0px #ff0044, 10px 0px #ff0044;
+      animation: rainbowEyes 1.5s linear infinite, eyePulse 0.8s ease-in-out infinite alternate;
+      z-index: 12;
+    }
+
+    /* Troca contínua por todo o espectro RGB */
+    @keyframes rainbowEyes {
+      0%   { filter: hue-rotate(0deg) brightness(1.3); }
+      100% { filter: hue-rotate(360deg) brightness(1.3); }
+    }
+
+    /* Brilho pulsante nos olhos */
+    @keyframes eyePulse {
+      0%   { transform: scale(1); }
+      100% { transform: scale(1.12); }
+    }
+
+    /* Movimento suave de voo no ar */
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0px) rotate(-2deg);
+      }
+      50% {
+        transform: translateY(-28px) rotate(2deg);
+      }
+    }
+
+    /* Animação fluida em 3 etapas */
+    @keyframes flap {
+      /* Etapa 1: Asas totalmente para cima */
+      0%, 100% {
+        box-shadow: 
+          /* Orelhas */
+          -20px -30px #8a2be2, 20px -30px #8a2be2,
+          -20px -20px #9d4edd, 20px -20px #9d4edd,
+          /* Cabeça */
+          -20px -10px #8a2be2, -10px -10px #9d4edd, 0px -10px #9d4edd, 10px -10px #9d4edd, 20px -10px #8a2be2,
+          -20px 0px #8a2be2, 0px 0px #9d4edd, 20px 0px #8a2be2,
+          -20px 10px #8a2be2, -10px 10px #9d4edd, 0px 10px #9d4edd, 10px 10px #9d4edd, 20px 10px #8a2be2,
+          /* Presas */
+          -10px 15px #ffffff, 10px 15px #ffffff,
+          /* Corpo */
+          -10px 20px #7b2cbf, 0px 20px #9d4edd, 10px 20px #7b2cbf,
+          -10px 30px #7b2cbf, 0px 30px #8a2be2, 10px 30px #7b2cbf,
+          /* Patinhas */
+          -10px 40px #5a189a, 10px 40px #5a189a,
+          /* Asas Altas */
+          -30px -10px #6a1b9a, -40px -20px #6a1b9a, -50px -30px #5a189a, -60px -40px #5a189a, -70px -30px #5a189a,
+          -30px 0px #6a1b9a, -40px -10px #6a1b9a, -50px -20px #6a1b9a, -60px -20px #6a1b9a,
+          -30px 10px #5a189a, -40px 0px #5a189a,
+          30px -10px #6a1b9a, 40px -20px #6a1b9a, 50px -30px #5a189a, 60px -40px #5a189a, 70px -30px #5a189a,
+          30px 0px #6a1b9a, 40px -10px #6a1b9a, 50px -20px #6a1b9a, 60px -20px #6a1b9a,
+          30px 10px #5a189a, 40px 0px #5a189a;
+      }
+
+      /* Etapa 2: Asas no meio (esticadas) */
+      33%, 83% {
+        box-shadow: 
+          /* Orelhas */
+          -20px -30px #8a2be2, 20px -30px #8a2be2,
+          -20px -20px #9d4edd, 20px -20px #9d4edd,
+          /* Cabeça */
+          -20px -10px #8a2be2, -10px -10px #9d4edd, 0px -10px #9d4edd, 10px -10px #9d4edd, 20px -10px #8a2be2,
+          -20px 0px #8a2be2, 0px 0px #9d4edd, 20px 0px #8a2be2,
+          -20px 10px #8a2be2, -10px 10px #9d4edd, 0px 10px #9d4edd, 10px 10px #9d4edd, 20px 10px #8a2be2,
+          /* Presas */
+          -10px 15px #ffffff, 10px 15px #ffffff,
+          /* Corpo */
+          -10px 20px #7b2cbf, 0px 20px #9d4edd, 10px 20px #7b2cbf,
+          -10px 30px #7b2cbf, 0px 30px #8a2be2, 10px 30px #7b2cbf,
+          /* Patinhas */
+          -10px 40px #5a189a, 10px 40px #5a189a,
+          /* Asas Esticadas */
+          -30px 0px #6a1b9a, -40px 0px #6a1b9a, -50px -10px #5a189a, -60px -10px #5a189a, -70px 0px #5a189a, -80px 10px #5a189a,
+          -30px 10px #6a1b9a, -40px 10px #6a1b9a, -50px 0px #6a1b9a, -60px 0px #6a1b9a, -70px 10px #6a1b9a,
+          -30px 20px #5a189a, -40px 20px #5a189a, -50px 10px #5a189a,
+          30px 0px #6a1b9a, 40px 0px #6a1b9a, 50px -10px #5a189a, 60px -10px #5a189a, 70px 0px #5a189a, 80px 10px #5a189a,
+          30px 10px #6a1b9a, 40px 10px #6a1b9a, 50px 0px #6a1b9a, 60px 0px #6a1b9a, 70px 10px #6a1b9a,
+          30px 20px #5a189a, 40px 20px #5a189a, 50px 10px #5a189a;
+      }
+
+      /* Etapa 3: Asas totalmente para baixo */
+      58% {
+        box-shadow: 
+          /* Orelhas */
+          -20px -30px #8a2be2, 20px -30px #8a2be2,
+          -20px -20px #9d4edd, 20px -20px #9d4edd,
+          /* Cabeça */
+          -20px -10px #8a2be2, -10px -10px #9d4edd, 0px -10px #9d4edd, 10px -10px #9d4edd, 20px -10px #8a2be2,
+          -20px 0px #8a2be2, 0px 0px #9d4edd, 20px 0px #8a2be2,
+          -20px 10px #8a2be2, -10px 10px #9d4edd, 0px 10px #9d4edd, 10px 10px #9d4edd, 20px 10px #8a2be2,
+          /* Presas */
+          -10px 15px #ffffff, 10px 15px #ffffff,
+          /* Corpo */
+          -10px 20px #7b2cbf, 0px 20px #9d4edd, 10px 20px #7b2cbf,
+          -10px 30px #7b2cbf, 0px 30px #8a2be2, 10px 30px #7b2cbf,
+          /* Patinhas */
+          -10px 40px #5a189a, 10px 40px #5a189a,
+          /* Asas Baixas */
+          -30px 10px #6a1b9a, -40px 20px #6a1b9a, -50px 30px #5a189a, -60px 40px #5a189a,
+          -30px 20px #6a1b9a, -40px 30px #6a1b9a, -50px 40px #5a189a,
+          -30px 30px #5a189a,
+          30px 10px #6a1b9a, 40px 20px #6a1b9a, 50px 30px #5a189a, 60px 40px #5a189a,
+          30px 20px #6a1b9a, 40px 30px #6a1b9a, 50px 40px #5a189a,
+          30px 30px #5a189a;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Cenário de Fundo -->
+  <div class="stars"></div>
+  <div class="stars-2"></div>
+  <div class="shooting-star"></div>
+  <div class="moon"></div>
+  <div class="cloud cloud-1"></div>
+  <div class="cloud cloud-2"></div>
+  
+  <div class="landscape">
+    <div class="castle"></div>
+    <div class="mountain-back"></div>
+    <div class="mountain-front"></div>
+    <div class="mist"></div>
+  </div>
+
+  <!-- Morcego -->
+  <div class="bat-container">
+    <div class="bat-wrapper">
+      <div class="bat" id="bat"></div>
+      <div class="bat-eyes"></div>
+    </div>
+  </div>
+
+  <script>
+    const bat = document.getElementById('bat');
+    const quatroMinutos = 4 * 60 * 1000;
+    const cincoMinutos = 5 * 60 * 1000;
+    let usarQuatroMinutos = true;
+    let anguloAtual = 0;
+
+    function cicloDeCor() {
+      const tempoEspera = usarQuatroMinutos ? quatroMinutos : cincoMinutos;
+      usarQuatroMinutos = !usarQuatroMinutos;
+
+      setTimeout(() => {
+        anguloAtual = (anguloAtual + Math.floor(Math.random() * 240) + 60) % 360;
+        bat.style.filter = `hue-rotate(${anguloAtual}deg)`;
+        
+        cicloDeCor();
+      }, tempoEspera);
+    }
+
+    cicloDeCor();
+  </script>
+
+</body>
+</html>
